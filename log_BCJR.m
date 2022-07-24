@@ -39,7 +39,7 @@ alpha_t(1,1) = 0;
 for t = 2:T
     for r = 1:size(trellis, 1)
         for s = 1:size(trellis, 1)
-            alpha_t(s,t) = max_star(alpha_t(s,t), alpha_t(r,t-1)+Gamma_t(r,s,t));
+            alpha_t(s,t) = max_star(alpha_t(s,t), alpha_t(r,t-1)+Gamma_t(r,s,t-1));% 修复bug为:Gamma_t(r,s,t-1)
         end
     end
 end
@@ -76,7 +76,7 @@ for t = 1:T
         for r = 1:size(trellis, 1)
             for s = 1:size(trellis, 1)
                 if ~isequal(trellis(r,s).out,Inf)
-                    c_temp = cell2mat(trellis(r,s).out)
+                    c_temp = cell2mat(trellis(r,s).out);
                     if c_temp(i) == 1
                         L_plus = max_star(L_plus, M_t(r, s, t));
                     else
