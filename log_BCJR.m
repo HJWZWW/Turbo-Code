@@ -50,12 +50,22 @@ for t = 1:T
         beta_t(i,t) = -Inf;
     end
 end
+%---------------依据是否terminated来决定下面两行
 beta_t(1, T) = 0;
+% beta_t(:,T) = log(1/size(trellis, 1));
 % for t = T - 1:1
 for t = (T - 1):-1:1
     for r = 1:size(trellis, 1)
         for s = 1:size(trellis, 1)
+%             if r == 1 && t == 1
+%                 disp(Gamma_t(r,s,t+1));
+%                 disp(beta_t(s,t+1));
+%                 disp(beta_t(r,t));
+%             end
             beta_t(r,t) = max_star(beta_t(r,t), beta_t(s,t+1) + Gamma_t(r,s,t+1));
+%             if r == 1 && t == 1
+%                 disp(beta_t(r,t));
+%             end
         end
     end
 end
